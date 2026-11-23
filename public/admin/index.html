@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>内容后台 · Decap CMS</title>
+  </head>
+  <body>
+    <!--
+      锁定精确版本 3.18.0，不用 ^ 号，避免上游发版后后台被静默替换。
+      不加 SRI：Decap 运行时会从同源相对路径动态加载 code-split chunk，
+      SRI 只能覆盖主文件，反而给出安全假象。要彻底自托管需镜像 dist/ 全量 64MB，不值。
+    -->
+    <script src="https://unpkg.com/decap-cms@3.18.0/dist/decap-cms.js"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+name = "decap-oauth"
+main = "src/index.js"
+compatibility_date = "2026-11-20"
+
+# 变量走 wrangler secret put，不写在这里：
+# GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET

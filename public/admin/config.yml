@@ -1,0 +1,68 @@
+backend:
+  name: github
+  repo: imagrove/decap-cms-test
+  branch: main
+  # Cloudflare Worker OAuth 回调服务，部署后回填实际地址
+  base_url: https://decap-oauth.__ACCOUNT__.workers.dev
+  auth_endpoint: auth
+
+site_url: https://imagrove.github.io/decap-cms-test/
+display_url: https://imagrove.github.io/decap-cms-test/
+logo_url: https://imagrove.github.io/decap-cms-test/favicon.svg
+
+# 写稿默认直接提交 main。需要草稿审阅流程时改成 editorial_workflow，
+# 那样每次保存会走分支 + Pull Request，适合多人协作但步骤变多。
+publish_mode: simple
+
+media_folder: public/uploads
+public_folder: /decap-cms-test/uploads
+
+collections:
+  - name: posts
+    label: 文章
+    label_singular: 一篇文章
+    description: 写入 src/content/posts/，字段与 src/content.config.ts 的 schema 对应
+    folder: src/content/posts
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    sortable_fields: [date, title]
+    view_filters:
+      - label: 只看草稿
+        field: draft
+        pattern: true
+    fields:
+      - name: title
+        label: 标题
+        widget: string
+      - name: date
+        label: 发布日期
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: false
+        format: YYYY-MM-DD
+      - name: description
+        label: 摘要
+        widget: text
+        required: false
+        hint: 显示在列表页，也作为页面 description
+      - name: cover
+        label: 封面图
+        widget: image
+        required: false
+        hint: 上传后落到 public/uploads/
+      - name: tags
+        label: 标签
+        widget: list
+        required: false
+        default: []
+      - name: draft
+        label: 草稿
+        widget: boolean
+        default: false
+        hint: 草稿只在本地开发模式可见，线上构建会过滤掉
+      - name: body
+        label: 正文
+        widget: markdown

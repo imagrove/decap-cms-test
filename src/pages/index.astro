@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const base = import.meta.env.BASE_URL;
+const posts = (await getCollection('posts'))
+  .filter((post) => !post.data.draft || import.meta.env.DEV)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Base title="Decap CMS 测试站" description="Decap CMS + Astro + GitHub 的最小可用闭环">
+  <h1>Decap CMS 测试站</h1>
+  <p class="meta">
+    打开 <a href={`${base}admin/`}>/admin/</a> 进入后台，用 GitHub 账号登录后写文章。
+    保存即生成一次 git commit，GitHub Actions 构建后这里就会出现新文章。
+  </p>
+
+  <ul class="post-list">
+    {
+      posts.map((post) => (
+        <li>
+          <h2>
+            <a href={`${base}posts/${post.id}/`}>{post.data.title}</a>
+            {post.data.draft && <span class="draft-badge">草稿</span>}
+          </h2>
+          <div class="meta">
+            {post.data.date.toISOString().slice(0, 10)}
+            {post.data.tags.map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+          {post.data.description && <p>{post.data.description}</p>}
+        </li>
+      ))
+    }
+  </ul>
+</Base>

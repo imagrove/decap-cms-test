@@ -14,12 +14,31 @@ oauth-worker/          GitHub OAuth 中转服务（Cloudflare Worker）
 
 ## 本地开发
 
+本地有两套跑法，用途不同。
+
+### 只看页面
+
 ```bash
 npm install
 npm run dev      # http://localhost:4321/decap-cms-test/
 ```
 
-`/admin/` 在本地能打开，但登录要连 GitHub，所以本地只适合看界面。
+### 连后台一起跑（推荐，能真正写稿）
+
+开两个终端：
+
+```bash
+npm run dev               # Astro，默认 4321
+npm run cms               # decap-server，固定 8081，把后台改动写进本地 git
+```
+
+后台地址：http://localhost:4321/decap-cms-test/admin/index.html
+
+- 本地访问必须带 `index.html`。Astro dev 不像 GitHub Pages 那样给目录做 index，`/admin/` 会 404。
+- 本地打开后台会自动切到 `config.local.yml`（`local_backend: true`），点 Login 直接进，不需要 GitHub 登录。
+- 保存文章会在本地仓库产生一次 commit，同时 Astro 热更新页面。
+- 上传的图片落在 `public/uploads/`。
+
 
 ## 上线链路
 

@@ -1,5 +1,7 @@
 ---
+import '../styles/tokens.css';
 import '../styles/global.css';
+import BrandWordmark from '../components/BrandWordmark.astro';
 
 interface Props {
   title: string;
@@ -22,18 +24,47 @@ const base = import.meta.env.BASE_URL;
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href={base}>Imagrove · 产品目录原型</a>
-      <nav>
-        <a href={`${base}products/`}>产品</a>
-        <a href={`${base}posts/`}>动态</a>
-        <a href={`${base}admin/`}>后台</a>
-      </nav>
+      <div class="header-inner container">
+        <BrandWordmark href={base} height="24px" label="Imagrove 产品目录首页" />
+        <nav class="header-nav">
+          <a href={`${base}products/`}>产品</a>
+          <a href={`${base}posts/`}>动态</a>
+          <a href={`${base}admin/`}>后台</a>
+        </nav>
+      </div>
     </header>
+
     <main>
-      <slot />
+      <div class="container">
+        <slot />
+      </div>
     </main>
+
     <footer class="site-footer">
-      内容写在仓库的 Markdown 里，同事用 Decap 后台编辑，提交后自动构建上线。
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <BrandWordmark height="22px" />
+          <p>产品信息写在仓库的 Markdown 里，同事用 Decap 后台编辑，提交后自动构建上线。</p>
+        </div>
+        <div class="footer-col">
+          <h4>浏览</h4>
+          <ul>
+            <li><a href={`${base}products/`}>产品目录</a></li>
+            <li><a href={`${base}posts/`}>动态</a></li>
+            <li><a href={`${base}admin/`}>内容后台</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>说明</h4>
+          <ul>
+            <li><a href={`${base}posts/welcome/`}>这个原型是什么</a></li>
+            <li><a href="https://imagrove.com/odm/">ODM 询盘</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">内容模型原型 · 数据为示例，正式发布前须产品线确认</div>
+      </div>
     </footer>
   </body>
 </html>

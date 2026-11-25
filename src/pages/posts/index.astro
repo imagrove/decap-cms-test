@@ -8,21 +8,26 @@ const posts = (await getCollection('posts'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
-<Base title="文章列表 · Decap CMS 测试站">
-  <h1>文章列表</h1>
-  <p class="meta">共 {posts.length} 篇（含草稿预览仅在开发模式可见）</p>
+<Base title="动态 · Imagrove 原型">
+  <section class="hero">
+    <p class="eyebrow">Notes</p>
+    <h1>动态</h1>
+    <p class="lead">共 {posts.length} 篇 · 与产品一样，每篇对应一个 Markdown 文件</p>
+  </section>
 
-  <ul class="post-list">
-    {
-      posts.map((post) => (
-        <li>
-          <h2>
-            <a href={`${base}posts/${post.id}/`}>{post.data.title}</a>
-            {post.data.draft && <span class="draft-badge">草稿</span>}
-          </h2>
-          <div class="meta">{post.data.date.toISOString().slice(0, 10)}</div>
-        </li>
-      ))
-    }
-  </ul>
+  <section class="section">
+    <ul class="post-list">
+      {
+        posts.map((post) => (
+          <li>
+            <h3>
+              <a href={`${base}posts/${post.id}/`}>{post.data.title}</a>
+              {post.data.draft && <span class="draft-badge" style="margin-left: 8px;">草稿</span>}
+            </h3>
+            <div class="meta">{post.data.date.toISOString().slice(0, 10)}</div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </Base>

@@ -1,0 +1,98 @@
+/*
+  品牌 token —— 值全部取自《站点品牌色与主题Token规范_261108.md》§2「角色 × 主题矩阵」。
+  组件只消费这些变量，不写 hex（§3.5）；变量名按角色命名（§3.1）。
+
+  三处声明是 §3.3 的要求，漏第三处会出现"系统是暗色、页面仍是浅色"：
+  1. :root                  —— 浅色档（同时作为默认）
+  2. :root[data-theme=dark] —— 手动切换
+  3. prefers-color-scheme   —— 无 JS 时的系统偏好兜底
+
+  本原型暂未做切换器 UI，第 2 处先占位，加切换器时不用再改样式。
+*/
+:root {
+  color-scheme: light;
+
+  --surface-page: #f7f9fc;
+  --surface-card: #ffffff;
+  --surface-footer: #eaeef4;
+
+  --text-primary: #17202e;
+  --text-secondary: #4b5866;
+
+  /* #3b82f6 在浅底只有 3.49，因此链接走深蓝档，亮蓝只用于大标题强调 */
+  --brand-link: #0d47a1;
+  --brand-accent: #1d4ed8;
+
+  --btn-primary-bg: #1d4ed8;
+  --btn-primary-fg: #ffffff;
+
+  /* 字标跟随前景色，不涂蓝（§4.1） */
+  --brand-fg: #17202e;
+
+  --accent-green: #1b5e20;
+
+  /* §2 未定义边框角色，沿用 drone 手写页的 --border 取值，不另造色 */
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  --radius: 8px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow: 0 4px 16px -4px rgba(13, 71, 161, 0.12);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --surface-page: #111827;
+  --surface-card: #1b2231;
+  --surface-footer: #1e293b;
+
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+
+  --brand-link: #60a5fa;
+  --brand-accent: #3b82f6;
+
+  --btn-primary-bg: #2563eb;
+  --btn-primary-fg: #ffffff;
+
+  --brand-fg: #ffffff;
+
+  --accent-green: #66bb6a;
+
+  --border: #2b3547;
+  --border-strong: #3b4a63;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --surface-page: #111827;
+    --surface-card: #1b2231;
+    --surface-footer: #1e293b;
+
+    --text-primary: #e5e7eb;
+    --text-secondary: #9ca3af;
+
+    --brand-link: #60a5fa;
+    --brand-accent: #3b82f6;
+
+    --btn-primary-bg: #2563eb;
+    --btn-primary-fg: #ffffff;
+
+    --brand-fg: #ffffff;
+
+    --accent-green: #66bb6a;
+
+    --border: #2b3547;
+    --border-strong: #3b4a63;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.5);
+  }
+}

@@ -1,0 +1,60 @@
+---
+// 品牌字标（内联 SVG + currentColor）：颜色跟随所在元素文字色，深浅主题自动反色。
+// 与 drone / tutorial / hive 共用同一份源文件，sha 须一致（规范 §4.8）。
+// 源文件：src/assets/imagrove-wordmark.svg（sha-256 16e83d2f…62db26，与权威源一致）
+import wordmark from '../assets/imagrove-wordmark.svg?raw';
+
+interface Props {
+  /** 字标颜色；默认走前景色 token，随主题反色（规范 §4.2） */
+  color?: string;
+  /** 字标高度，默认 26px；宽高比恒为 3.883，只设高度 */
+  height?: string;
+  /** 点击跳转地址；传入时整块字标渲染为链接 */
+  href?: string;
+  label?: string;
+}
+
+const {
+  color = 'var(--brand-fg, #111)',
+  height = '26px',
+  href,
+  label = 'Imagrove',
+} = Astro.props;
+---
+
+{
+  href ? (
+    <a
+      class="brand-wordmark"
+      href={href}
+      aria-label={label}
+      style={`color:${color};--brand-h:${height}`}
+      set:html={wordmark}
+    />
+  ) : (
+    <span class="brand-wordmark" style={`color:${color};--brand-h:${height}`} set:html={wordmark} />
+  )
+}
+
+<style>
+  .brand-wordmark {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+  }
+
+  .brand-wordmark :global(svg) {
+    display: block;
+    height: var(--brand-h, 26px);
+    width: auto;
+  }
+
+  a.brand-wordmark {
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  a.brand-wordmark:hover {
+    opacity: 0.8;
+  }
+</style>

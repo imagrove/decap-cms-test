@@ -18,15 +18,25 @@ const posts = (await getCollection('posts'))
   .slice(0, 3);
 ---
 
-<Base title="Decap CMS 产品目录原型" description="Markdown 发布产品信息，Decap 后台给同事改内容">
-  <h1>产品目录原型</h1>
-  <p class="meta">
-    产品信息写在 Markdown 里，同事在 <a href={`${base}admin/`}>后台</a> 改完保存即提交，
-    构建后这里自动更新。
-  </p>
+<Base title="Imagrove · 产品目录原型" description="Markdown 发布产品信息，Decap 后台给同事改内容">
+  <section class="hero">
+    <p class="eyebrow">Imagrove · 产品目录原型</p>
+    <h1>产品信息写在 Markdown 里，<br /><em>同事自己就能改</em></h1>
+    <p class="lead">
+      每个产品是仓库里的一个文件，加文件即上线、删文件即下架。同事在后台改完点保存，
+      提交、构建、上线自动完成，不需要开发介入。
+    </p>
+    <div class="hero-actions">
+      <a class="btn" href={`${base}products/`}>浏览产品目录</a>
+      <a class="btn btn-ghost" href={`${base}admin/`}>打开内容后台</a>
+    </div>
+  </section>
 
-  <section>
-    <h2 class="cat-title">精选产品</h2>
+  <section class="section">
+    <div class="section-head">
+      <h2>精选产品</h2>
+      <a href={`${base}products/`}>全部 {products.length} 个产品 →</a>
+    </div>
     <div class="product-grid">
       {
         featured.map((product) => {
@@ -50,11 +60,13 @@ const posts = (await getCollection('posts'))
         })
       }
     </div>
-    <p><a href={`${base}products/`}>查看全部 {products.length} 个产品 →</a></p>
   </section>
 
-  <section>
-    <h2 class="cat-title">最近动态</h2>
+  <section class="section">
+    <div class="section-head">
+      <h2>最近动态</h2>
+      <a href={`${base}posts/`}>全部动态 →</a>
+    </div>
     <ul class="post-list">
       {
         posts.map((post) => (

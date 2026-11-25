@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { CATEGORIES, categoryLabel } from '../../lib/categories';
+import { CATEGORIES } from '../../lib/categories';
 
 const base = import.meta.env.BASE_URL;
 const products = (await getCollection('products')).sort(
@@ -18,13 +18,16 @@ const coverOf = (cover?: string) =>
   cover ? (cover.startsWith(base) ? cover : `${base}${cover.replace(/^\//, '')}`) : undefined;
 ---
 
-<Base title="产品目录 · Decap CMS 测试站" description="按分类浏览产品，每个产品对应仓库里的一个 Markdown 文件">
-  <h1>产品目录</h1>
-  <p class="meta">
-    共 {products.length} 个产品 · 每个产品是 <code>src/content/products/</code> 下的一个 Markdown 文件
-  </p>
+<Base title="产品目录 · Imagrove 原型" description="按分类浏览产品，每个产品对应仓库里的一个 Markdown 文件">
+  <section class="hero">
+    <p class="eyebrow">Product Catalog</p>
+    <h1>产品目录</h1>
+    <p class="lead">
+      共 {products.length} 个产品 · 每个产品是 <code>src/content/products/</code> 下的一个 Markdown 文件
+    </p>
+  </section>
 
-  <nav class="cat-nav">
+  <nav class="cat-nav" style="padding-top: 24px;">
     {groups.map((group) => <a href={`#${group.id}`}>{group.label}</a>)}
   </nav>
 
@@ -44,9 +47,11 @@ const coverOf = (cover?: string) =>
                 )}
                 <div class="product-card-body">
                   <h3>{product.data.name}</h3>
-                  <p class="product-card-model">{product.data.model}</p>
+                  <p class="product-card-model">
+                    {product.data.model}
+                    {product.data.status === 'eol' && ' · 停产'}
+                  </p>
                   <p class="product-card-summary">{product.data.summary}</p>
-                  {product.data.status === 'eol' && <span class="draft-badge">停产</span>}
                 </div>
               </a>
             );

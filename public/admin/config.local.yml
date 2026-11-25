@@ -55,3 +55,89 @@ collections:
       - name: body
         label: 正文
         widget: markdown
+
+  - name: products
+    label: 产品
+    label_singular: 一个产品
+    folder: src/content/products
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    identifier_field: name
+    sortable_fields: [order, name, model]
+    view_groups:
+      - label: 分类
+        field: category
+    fields:
+      - name: name
+        label: 产品名称
+        widget: string
+      - name: model
+        label: 型号
+        widget: string
+        required: false
+      - name: category
+        label: 分类
+        widget: select
+        options:
+          - { label: 显示与交互, value: display }
+          - { label: 传感与采集, value: sensor }
+          - { label: 通信与网关, value: connectivity }
+          - { label: 电源与控制, value: power }
+          - { label: 配件与模块, value: accessory }
+      - name: summary
+        label: 一句话卖点
+        widget: text
+      - name: cover
+        label: 主图
+        widget: image
+        required: false
+      - name: gallery
+        label: 图集
+        widget: list
+        required: false
+        default: []
+        hint: 逐张添加图片路径（Decap 的 list 默认按字符串数组写入）
+      - name: features
+        label: 核心特点
+        widget: list
+        required: false
+        default: []
+        fields:
+          - { name: title, label: 标题, widget: string }
+          - { name: detail, label: 说明, widget: text, required: false }
+      - name: specs
+        label: 技术规格
+        widget: list
+        required: false
+        default: []
+        fields:
+          - { name: label, label: 项目, widget: string }
+          - { name: value, label: 内容, widget: string }
+      - name: moq
+        label: 起订量
+        widget: string
+        required: false
+      - name: lead_time
+        label: 交期
+        widget: string
+        required: false
+      - name: status
+        label: 状态
+        widget: select
+        options:
+          - { label: 在售, value: active }
+          - { label: 停产, value: eol }
+        default: active
+      - name: featured
+        label: 首页精选
+        widget: boolean
+        default: false
+      - name: order
+        label: 排序权重
+        widget: number
+        value_type: int
+        default: 100
+

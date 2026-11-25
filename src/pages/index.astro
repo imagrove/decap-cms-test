@@ -1,37 +1,75 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { categoryLabel } from '../lib/categories';
 
 const base = import.meta.env.BASE_URL;
+const url = (src?: string) =>
+  src ? (src.startsWith(base) ? src : `${base}${src.replace(/^\//, '')}`) : undefined;
+
+const products = (await getCollection('products'))
+  .filter((p) => p.data.status === 'active')
+  .sort((a, b) => a.data.order - b.data.order);
+const featured = products.filter((p) => p.data.featured).slice(0, 3);
+
 const posts = (await getCollection('posts'))
   .filter((post) => !post.data.draft || import.meta.env.DEV)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
 ---
 
-<Base title="Decap CMS 测试站" description="Decap CMS + Astro + GitHub 的最小可用闭环">
-  <h1>Decap CMS 测试站</h1>
+<Base title="Decap CMS 产品目录原型" description="Markdown 发布产品信息，Decap 后台给同事改内容">
+  <h1>产品目录原型</h1>
   <p class="meta">
-    打开 <a href={`${base}admin/`}>/admin/</a> 进入后台，用 GitHub 账号登录后写文章。
-    保存即生成一次 git commit，GitHub Actions 构建后这里就会出现新文章。
+    产品信息写在 Markdown 里，同事在 <a href={`${base}admin/`}>后台</a> 改完保存即提交，
+    构建后这里自动更新。
   </p>
 
-  <ul class="post-list">
-    {
-      posts.map((post) => (
-        <li>
-          <h2>
-            <a href={`${base}posts/${post.id}/`}>{post.data.title}</a>
-            {post.data.draft && <span class="draft-badge">草稿</span>}
-          </h2>
-          <div class="meta">
-            {post.data.date.toISOString().slice(0, 10)}
-            {post.data.tags.map((tag) => (
-              <span class="tag">{tag}</span>
-            ))}
-          </div>
-          {post.data.description && <p>{post.data.description}</p>}
-        </li>
-      ))
-    }
-  </ul>
+  <section>
+    <h2 class="cat-title">精选产品</h2>
+    <div class="product-grid">
+      {
+        featured.map((product) => {
+          const cover = url(product.data.cover);
+          return (
+            <a class="product-card" href={`${base}products/${product.id}/`}>
+              {cover ? (
+                <img src={cover} alt={product.data.name} loading="lazy" />
+              ) : (
+                <div class="product-card-noimg">无图</div>
+              )}
+              <div class="product-card-body">
+                <h3>{product.data.name}</h3>
+                <p class="product-card-model">
+                  {product.data.model} · {categoryLabel(product.data.category)}
+                </p>
+                <p class="product-card-summary">{product.data.summary}</p>
+              </div>
+            </a>
+          );
+        })
+      }
+    </div>
+    <p><a href={`${base}products/`}>查看全部 {products.length} 个产品 →</a></p>
+  </section>
+
+  <section>
+    <h2 class="cat-title">最近动态</h2>
+    <ul class="post-list">
+      {
+        posts.map((post) => (
+          <li>
+            <h3>
+              <a href={`${base}posts/${post.id}/`}>{post.data.title}</a>
+            </h3>
+            <div class="meta">{post.data.date.toISOString().slice(0, 10)}</div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <p class="prototype-note">
+    本页为内容模型原型，参数与图片为示例，正式发布前需由产品线确认。
+  </p>
 </Base>

@@ -22,9 +22,10 @@ const base = import.meta.env.BASE_URL;
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href={base}>Decap CMS 测试站</a>
+      <a class="brand" href={base}>Imagrove · 产品目录原型</a>
       <nav>
-        <a href={`${base}posts/`}>文章</a>
+        <a href={`${base}products/`}>产品</a>
+        <a href={`${base}posts/`}>动态</a>
         <a href={`${base}admin/`}>后台</a>
       </nav>
     </header>
@@ -32,7 +33,7 @@ const base = import.meta.env.BASE_URL;
       <slot />
     </main>
     <footer class="site-footer">
-      内容由 Decap CMS 编辑，提交回 GitHub 仓库后自动构建。
+      内容写在仓库的 Markdown 里，同事用 Decap 后台编辑，提交后自动构建上线。
     </footer>
   </body>
 </html>

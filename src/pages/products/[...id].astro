@@ -1,0 +1,109 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { categoryLabel } from '../../lib/categories';
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((product) => ({ params: { id: product.id }, props: { product } }));
+}
+
+const { product } = Astro.props;
+const { Content } = await render(product);
+const p = product.data;
+
+// 图片字段按 public_folder 写入时已含 base，手写相对路径则补上 base
+const url = (src?: string) =>
+  src ? (src.startsWith(base) ? src : `${base}${src.replace(/^\//, '')}`) : undefined;
+
+const gallery = (p.gallery ?? []).map(url).filter(Boolean) as string[];
+---
+
+<Base title={`${p.name} · 产品目录`} description={p.summary}>
+  <p class="breadcrumb">
+    <a href={`${base}products/`}>产品目录</a> / <span>{categoryLabel(p.category)}</span>
+  </p>
+
+  <article class="product-detail">
+    <header>
+      <h1>{p.name}</h1>
+      <p class="meta">
+        {p.model && <span class="tag">{p.model}</span>}
+        <span class="tag">{categoryLabel(p.category)}</span>
+        {p.status === 'eol' && <span class="draft-badge">停产</span>}
+      </p>
+      <p class="product-lead">{p.summary}</p>
+    </header>
+
+    {url(p.cover) && <img class="cover" src={url(p.cover)} alt={p.name} />}
+
+    {
+      p.features.length > 0 && (
+        <section>
+          <h2>核心特点</h2>
+          <div class="feature-grid">
+            {p.features.map((feature) => (
+              <div class="feature">
+                <h3>{feature.title}</h3>
+                {feature.detail && <p>{feature.detail}</p>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      p.specs.length > 0 && (
+        <section>
+          <h2>技术规格</h2>
+          <table class="spec-table">
+            <tbody>
+              {p.specs.map((spec) => (
+                <tr>
+                  <th>{spec.label}</th>
+                  <td>{spec.value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )
+    }
+
+    <section>
+      <h2>产品说明</h2>
+      <Content />
+    </section>
+
+    {
+      gallery.length > 1 && (
+        <section>
+          <h2>图集</h2>
+          <div class="gallery">
+            {gallery.map((src) => (
+              <img src={src} alt={p.name} loading="lazy" />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <aside class="inquiry-box">
+      <h2>获取报价</h2>
+      <p>
+        {p.moq && <>起订量 {p.moq}；</>}
+        {p.lead_time && <>交期 {p.lead_time}；</>}支持外观、接口与固件定制。
+      </p>
+      <a class="btn" href="https://imagrove.com/odm/">提交询盘</a>
+    </aside>
+
+    <p class="prototype-note">
+      本页为内容模型原型，参数与图片为示例，正式发布前需由产品线确认。
+    </p>
+  </article>
+
+  <p><a href={`${base}products/`}>← 返回产品目录</a></p>
+</Base>

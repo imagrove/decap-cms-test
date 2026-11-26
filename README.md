@@ -4,7 +4,7 @@ Astro 静态产品目录。产品写在仓库的 Markdown 里，市场与产品�
 
 - 线上：https://imagrove.github.io/decap-cms-test/
 - 仓库：`github.com/imagrove/decap-cms-test`
-- 工作日志：[`LOG.md`](./LOG.md)
+- 工作日志：[`LOG.md`](./LOG.md) ｜ 并入主站的方案：[`待办.md`](./待办.md)
 
 ## 当前状态
 
@@ -129,5 +129,5 @@ npx wrangler@4 secret put GITHUB_CLIENT_SECRET
 1. **文案改英文** —— 面向海外客户，现在全站中文。计划：内容字段写英文值，Decap 后台的字段标签保持中文，界面固定文案抽成一份 copy 表便于将来做双语。
 2. **换真图与真参数** —— 现在三个产品共用 `public/uploads/product-placeholder.svg`，参数是示例值。
 3. **部署 OAuth Worker** —— 见上文，需要一枚 Workers 权限的 Cloudflare token。
-4. **定域名** —— 子域还是并进主站，定了再按「换成独立域名时」改。
+4. **定去处** —— 并入主站 `/products/` 还是独立子域，三种方式的对比与执行步骤见 [`待办.md`](./待办.md)。
 5. **恢复动态板块** —— 路由与 posts collection 都还在，有真实文章时把导航和首页区块接回来。

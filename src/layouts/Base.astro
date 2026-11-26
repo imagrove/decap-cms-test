@@ -1,4 +1,5 @@
 ---
+import { base } from '../lib/url';
 import '../styles/tokens.css';
 import '../styles/global.css';
 import BrandWordmark from '../components/BrandWordmark.astro';
@@ -9,7 +10,9 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const base = import.meta.env.BASE_URL;
+
+// 本地 dev 不做目录索引，/admin/ 会 404，必须带文件名；生产构建走目录索引
+const adminHref = import.meta.env.DEV ? `${base}admin/index.html` : `${base}admin/`;
 ---
 
 <!doctype html>
@@ -29,7 +32,7 @@ const base = import.meta.env.BASE_URL;
         <nav class="header-nav">
           <a href={`${base}products/`}>产品</a>
           <a href={`${base}posts/`}>动态</a>
-          <a href={`${base}admin/`}>后台</a>
+          <a href={adminHref}>后台</a>
         </nav>
       </div>
     </header>
@@ -51,7 +54,7 @@ const base = import.meta.env.BASE_URL;
           <ul>
             <li><a href={`${base}products/`}>产品目录</a></li>
             <li><a href={`${base}posts/`}>动态</a></li>
-            <li><a href={`${base}admin/`}>内容后台</a></li>
+            <li><a href={adminHref}>内容后台</a></li>
           </ul>
         </div>
         <div class="footer-col">

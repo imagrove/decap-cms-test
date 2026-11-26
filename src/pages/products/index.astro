@@ -1,9 +1,9 @@
 ---
+import { base } from '../../lib/url';
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { CATEGORIES } from '../../lib/categories';
 
-const base = import.meta.env.BASE_URL;
 const products = (await getCollection('products')).sort(
   (a, b) => a.data.order - b.data.order || a.data.name.localeCompare(b.data.name)
 );

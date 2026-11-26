@@ -1,9 +1,9 @@
 ---
+import { base } from '../../lib/url';
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { categoryLabel } from '../../lib/categories';
 
-const base = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
   const products = await getCollection('products');

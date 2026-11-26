@@ -5,6 +5,35 @@
 > **相关**：[`README.md`](./README.md)（运行方式与字段说明）· [`../独立站技术架构.md`](../独立站技术架构.md) §4（单站脚手架基线）· 跨站基建日志见 [`../LOG.md`](../LOG.md)
 > **当前状态（2026-11-27）**：站点已按对外产品站重写，产品目录可用、导航只剩「产品」、管理入口走 `/admin/`。线上后台登录仍不可用——缺 Worker 部署与 GitHub OAuth App。内容为中文、图为占位、参数为示例值，三项均在 README「待办」里。
 
+## 2026-11-27 · 并入主站 imagrove.com 的 /products/
+
+### 背景
+
+按 [`待办.md`](./待办.md) 的方案 A 执行：内容与页面并进主站仓库，路由挂 `/products/`，不再单独部署。主站是英文站（`lang="en"`），因此顺带解决了语言问题——产品内容直接写成英文。
+
+### 变更（主站 `imagrove.com`）
+
+- **内容**：新建 `src/content/products/`（三个英文产品 md）、`src/content.config.ts`、`src/lib/products.ts`（分类用英文标签）
+- **页面**：`src/pages/products/index.astro`（分类分组卡片）与 `[slug].astro`（两栏：正文 + sticky 询价卡）
+- **样式**：不复用原型的 `tokens.css` 与组件 CSS，改用主站 Tailwind 角色类名重写，只保留深色——主站在规范 §6.3 登记为仅深色，产品页跟随主站，否则同域下首页深、产品页白
+- **正文排版**：`global.css` 追加 `.product-prose` 作用域，只作用于详情页 Markdown，不影响首页 / ODM / cases
+- **导航**：`Nav.astro` 加 `Products`，`current` 类型扩展 `'products'`
+- **后台**：`public/admin/` 搬入，`config.yml` 改 `repo` → `imagrove/imagrove.com`、`site_url` → `https://imagrove.com`、`public_folder` → `/uploads`，删掉主站不存在的 posts 集合；`base_url` 保持 Worker 地址不变
+- **图片**：三个型号各生成一张技术图纸风格的深色 SVG（`public/uploads/product-tp-l1.svg` 等），替代"产品图待补"占位
+
+### 验证
+
+- 本地 `npm run build`：8 页（原 4 页 + 产品列表 + 3 个详情）
+- Playwright 实际点击：首页导航出现 PRODUCTS → 列表 3 张卡 → 详情页；`/odm/` 标题与版式完好，现有页面未受影响
+- 线上 `imagrove.com`：`/`、`/products/`、`/products/telepilot-lora/`、`/products/media-control-panel/`、`/admin/`、`/odm/` 全部 200，title 正确
+
+### 尾巴
+
+- **产品参数仍是示例值**，对外报价或投标前必须由产品线逐项确认
+- **OAuth Worker 仍未部署**：主站 `/admin/` 能打开，但 `config.yml` 的 `base_url` 还是占位地址，点登录会失败
+- **Worker 位置待迁**：`oauth-worker/` 留在本仓库，而本仓库已归档。它是两站共用的基础设施，应迁到主站仓库或独立基础设施仓库
+- 本仓库的 GitHub Pages 仍在线，暂未关闭；确认主站稳定后可停
+
 ## 2026-11-27 · 按对外站点重写：去掉所有实现细节
 
 ### 背景

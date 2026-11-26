@@ -5,6 +5,35 @@
 > **相关**：[`README.md`](./README.md)（运行方式与字段说明）· [`../独立站技术架构.md`](../独立站技术架构.md) §4（单站脚手架基线）· 跨站基建日志见 [`../LOG.md`](../LOG.md)
 > **当前状态（2026-11-26）**：本地编辑闭环可用（后台改完，页面立即变）；线上站点可正常浏览；**线上后台登录尚不可用**——缺 Worker 部署与 GitHub OAuth App。产品字段与页面形态已定型，参数是示例值。
 
+## 2026-11-27 · 修全站导航 404（BASE_URL 末尾不带斜杠）
+
+### 现象
+
+首页点导航「产品」「后台」「动态」全部 404，但直接在地址栏敲这三个 URL 却是 200。
+
+### 根因
+
+Astro 的 `import.meta.env.BASE_URL` 值是 `/decap-cms-test`，**末尾不带斜杠**。页面里写成 `${base}products/`，拼出来是 `/decap-cms-testproducts/` —— 少了一个分隔符。线上 HTML 里能直接看到 `href="/decap-cms-testproducts/"`。
+
+### 为什么没早发现
+
+之前每次验证都是 curl 或 Playwright 直接 `goto` 目标 URL，页面里的链接一次都没被点过。**链接拼接错误只在"点"的时候暴露**——这是验证方式的问题，不是代码复杂到看不出来。
+
+### 修复
+
+- 新增 `src/lib/url.ts`，导出补过尾斜杠的 `base`，六个页面改为 `import { base }`，不再各自读 `import.meta.env`。绑自定义域名后 `BASE_URL` 为 `/`，结果仍是 `/`，行为不变。
+- 顺带修 dev 下的后台入口：Astro dev 不给 `public/` 目录做索引，`/admin/` 会 404，`Base.astro` 里按 `import.meta.env.DEV` 切到 `admin/index.html`；生产构建仍走目录索引。
+
+### 验证
+
+- Playwright 真实点击四项：产品导航（3 张卡片）、产品卡进详情、后台（落到 Login）、动态，全部通过，无 pageerror。
+- `dist/` 内 grep 无 `/decap-cms-test[a-z]` 残留。
+- 线上首页 href 全部形如 `/decap-cms-test/products/`，三个入口均 200。
+
+### 教训
+
+站内链接的改动必须**点一遍**才算验证通过。curl 只能证明"目标页存在"，证明不了"入口链接正确"。
+
 ## 2026-11-26 · 样式按品牌 token 重做，接入字标与双主题
 
 ### 背景

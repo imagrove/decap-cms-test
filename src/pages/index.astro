@@ -11,30 +11,24 @@ const products = (await getCollection('products'))
   .filter((p) => p.data.status === 'active')
   .sort((a, b) => a.data.order - b.data.order);
 const featured = products.filter((p) => p.data.featured).slice(0, 3);
-
-const posts = (await getCollection('posts'))
-  .filter((post) => !post.data.draft || import.meta.env.DEV)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
 ---
 
-<Base title="Imagrove · 产品目录原型" description="Markdown 发布产品信息，Decap 后台给同事改内容">
+<Base title="Imagrove · 硬件产品线" description="面向海外的硬件定制与批量交付，覆盖方案定义、打样验证到量产">
   <section class="hero">
-    <p class="eyebrow">Imagrove · 产品目录原型</p>
-    <h1>产品信息写在 Markdown 里，<br /><em>同事自己就能改</em></h1>
+    <p class="eyebrow">Imagrove</p>
+    <h1>硬件定制，从方案到<em>量产交付</em></h1>
     <p class="lead">
-      每个产品是仓库里的一个文件，加文件即上线、删文件即下架。同事在后台改完点保存，
-      提交、构建、上线自动完成，不需要开发介入。
+      覆盖方案定义、打样验证与批量生产。支持外观、接口与固件定制，按项目方式推进。
     </p>
     <div class="hero-actions">
-      <a class="btn" href={`${base}products/`}>浏览产品目录</a>
-      <a class="btn btn-ghost" href={`${base}admin/`}>打开内容后台</a>
+      <a class="btn" href={`${base}products/`}>浏览产品线</a>
+      <a class="btn btn-ghost" href="https://imagrove.com/odm/">提交询盘</a>
     </div>
   </section>
 
   <section class="section">
     <div class="section-head">
-      <h2>精选产品</h2>
+      <h2>产品线</h2>
       <a href={`${base}products/`}>全部 {products.length} 个产品 →</a>
     </div>
     <div class="product-grid">
@@ -62,26 +56,4 @@ const posts = (await getCollection('posts'))
     </div>
   </section>
 
-  <section class="section">
-    <div class="section-head">
-      <h2>最近动态</h2>
-      <a href={`${base}posts/`}>全部动态 →</a>
-    </div>
-    <ul class="post-list">
-      {
-        posts.map((post) => (
-          <li>
-            <h3>
-              <a href={`${base}posts/${post.id}/`}>{post.data.title}</a>
-            </h3>
-            <div class="meta">{post.data.date.toISOString().slice(0, 10)}</div>
-          </li>
-        ))
-      }
-    </ul>
-  </section>
-
-  <p class="prototype-note">
-    本页为内容模型原型，参数与图片为示例，正式发布前需由产品线确认。
-  </p>
 </Base>

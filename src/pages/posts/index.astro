@@ -8,11 +8,11 @@ const posts = (await getCollection('posts'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
-<Base title="动态 · Imagrove 原型">
+<Base title="动态 · Imagrove">
   <section class="hero">
-    <p class="eyebrow">Notes</p>
+    <p class="eyebrow">动态</p>
     <h1>动态</h1>
-    <p class="lead">共 {posts.length} 篇 · 与产品一样，每篇对应一个 Markdown 文件</p>
+    <p class="lead">{posts.length > 0 ? `共 ${posts.length} 篇文章` : '暂无发布内容'}</p>
   </section>
 
   <section class="section">

@@ -18,13 +18,11 @@ const coverOf = (cover?: string) =>
   cover ? (cover.startsWith(base) ? cover : `${base}${cover.replace(/^\//, '')}`) : undefined;
 ---
 
-<Base title="产品目录 · Imagrove 原型" description="按分类浏览产品，每个产品对应仓库里的一个 Markdown 文件">
+<Base title="产品目录 · Imagrove" description="按品类浏览 Imagrove 的硬件产品线">
   <section class="hero">
-    <p class="eyebrow">Product Catalog</p>
+    <p class="eyebrow">产品线</p>
     <h1>产品目录</h1>
-    <p class="lead">
-      共 {products.length} 个产品 · 每个产品是 <code>src/content/products/</code> 下的一个 Markdown 文件
-    </p>
+    <p class="lead">共 {products.length} 个产品，按品类浏览。</p>
   </section>
 
   <nav class="cat-nav" style="padding-top: 24px;">
@@ -60,8 +58,4 @@ const coverOf = (cover?: string) =>
       </section>
     ))
   }
-
-  <p class="prototype-note">
-    本页为内容模型原型，参数与图片为示例，正式发布前需由产品线确认。
-  </p>
 </Base>

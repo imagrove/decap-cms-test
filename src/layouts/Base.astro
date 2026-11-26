@@ -10,9 +10,7 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-
-// 本地 dev 不做目录索引，/admin/ 会 404，必须带文件名；生产构建走目录索引
-const adminHref = import.meta.env.DEV ? `${base}admin/index.html` : `${base}admin/`;
+const year = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -31,8 +29,6 @@ const adminHref = import.meta.env.DEV ? `${base}admin/index.html` : `${base}admi
         <BrandWordmark href={base} height="24px" label="Imagrove 产品目录首页" />
         <nav class="header-nav">
           <a href={`${base}products/`}>产品</a>
-          <a href={`${base}posts/`}>动态</a>
-          <a href={adminHref}>后台</a>
         </nav>
       </div>
     </header>
@@ -47,26 +43,24 @@ const adminHref = import.meta.env.DEV ? `${base}admin/index.html` : `${base}admi
       <div class="footer-inner">
         <div class="footer-brand">
           <BrandWordmark height="22px" />
-          <p>产品信息写在仓库的 Markdown 里，同事用 Decap 后台编辑，提交后自动构建上线。</p>
+          <p>面向海外的硬件定制与批量交付，覆盖方案定义、打样验证到量产的全流程。</p>
         </div>
         <div class="footer-col">
-          <h4>浏览</h4>
+          <h4>产品</h4>
           <ul>
-            <li><a href={`${base}products/`}>产品目录</a></li>
-            <li><a href={`${base}posts/`}>动态</a></li>
-            <li><a href={adminHref}>内容后台</a></li>
+            <li><a href={`${base}products/`}>全部产品</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>说明</h4>
+          <h4>合作</h4>
           <ul>
-            <li><a href={`${base}posts/welcome/`}>这个原型是什么</a></li>
-            <li><a href="https://imagrove.com/odm/">ODM 询盘</a></li>
+            <li><a href="https://imagrove.com/odm/">提交询盘</a></li>
+            <li><a href="https://imagrove.com/">imagrove.com</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <div class="container">内容模型原型 · 数据为示例，正式发布前须产品线确认</div>
+        <div class="container">© {year} Imagrove</div>
       </div>
     </footer>
   </body>

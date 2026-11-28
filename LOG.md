@@ -3,7 +3,34 @@
 > **定位**：Imagrove 产品站的工作日志——记录**做了什么、踩了什么坑、还差什么**。要跑起来看 [`README.md`](./README.md)；要看它在站点矩阵里的位置看 [`../独立站技术架构.md`](../独立站技术架构.md) §4。
 > **边界**：只记"这一次"做了什么、根因、怎么验证、留了什么尾巴。同一类问题出现第二次时提炼成独立规范，此处只留指针。
 > **相关**：[`README.md`](./README.md)（运行方式与字段说明）· [`../独立站技术架构.md`](../独立站技术架构.md) §4（单站脚手架基线）· 跨站基建日志见 [`../LOG.md`](../LOG.md)
-> **当前状态（2026-11-27）**：站点已按对外产品站重写，产品目录可用、导航只剩「产品」、管理入口走 `/admin/`。线上后台登录仍不可用——缺 Worker 部署与 GitHub OAuth App。内容为中文、图为占位、参数为示例值，三项均在 README「待办」里。
+> **当前状态（2026-11-29）**：本仓库已归档，线上服务由 `store.imagrove.com` 与主站 `/products/` 提供，源码在主站仓库。仓库保留作历史参考，Pages 仍在但不再对外。
+
+## 2026-11-29 · 仓库改名 store.imagrove.com
+
+### 背景
+
+本站内容已并入主站 `/products/`，本仓库转为历史参考。名字还叫 `decap-cms-test`，与工作区其他站点（`drone.imagrove.com`、`notes.imagrove.com` 等一律用域名命名）不一致，改成它对应的域名。
+
+### 变更
+
+- **本地目录**：`decap-cms-test/` → `store.imagrove.com/`
+- **GitHub 仓库**：`imagrove/decap-cms-test` → `imagrove/store.imagrove.com`，旧名自动重定向
+- **Pages 路径**：`base` 由 `/decap-cms-test` 改为 `/store.imagrove.com`，因为项目页地址随仓库名变化
+- **后台配置**：`site_url` / `display_url` / `logo_url` / `public_folder` / `backend.repo` 同步
+- **产物路径**：三个产品 md 的图片前缀、`src/lib/url.ts` 的注释与示例一并更新
+- **删除空集合**：`posts` collection 与 `src/pages/posts/` 移除——内容并入主站后本站不再承担内容运营，构建时的空集合警告随之消除
+- **工作区文档**：架构文档 §4.3/§6/§7、品牌规范 §4/§6、工作区 `LOG.md` 的 11-26 条目（加改名注记，路径按现名书写）
+
+### 验证
+
+- `npm run build`：5 页无警告；`dist/` 内 `decap-cms-test` 残留为 0
+- 新 Pages 地址 `https://imagrove.github.io/store.imagrove.com/`、`/products/`、`/admin/` 均 200
+- 旧地址 `https://imagrove.github.io/decap-cms-test/` 返回 404——仓库改名后 Pages 路径不会自动跟随，属预期
+
+### 尾巴
+
+- 旧 Pages 地址已失效。本站从未对外推广，没有外部链接依赖，无需 301
+- 本 LOG 在此条目之前的记录保留当时的路径与 URL（`/decap-cms-test`），那是历史事实，不做回改
 
 ## 2026-11-27 · 并入主站 imagrove.com 的 /products/
 

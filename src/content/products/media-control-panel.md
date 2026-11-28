@@ -3,7 +3,7 @@ name: MediaControl 多媒体控制面板
 model: MC-05
 category: display
 summary: 86 盒安装的触控控制面板，断网时本地逻辑独立运行，通过 RS232 与网络协议驱动投影、音响与灯光。
-cover: /decap-cms-test/uploads/product-placeholder.svg
+cover: /store.imagrove.com/uploads/product-placeholder.svg
 features:
   - title: 离线可运行
     detail: 场景逻辑存在设备内，断网不影响按键响应

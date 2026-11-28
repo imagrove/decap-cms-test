@@ -3,7 +3,7 @@ name: SmartEnergy 电能监测网关
 model: SE-12
 category: power
 summary: 单相与三相电能采集网关，Modbus 与 MQTT 双协议输出，适合工厂车间与商业楼宇的分项计量。
-cover: /decap-cms-test/uploads/product-placeholder.svg
+cover: /store.imagrove.com/uploads/product-placeholder.svg
 features:
   - title: 双协议并存
     detail: 下行 Modbus RTU 采集，上行 MQTT 推送，旧设备无需改造

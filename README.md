@@ -4,8 +4,8 @@
 
 Astro 静态产品目录。产品写在仓库的 Markdown 里，市场与产品同事通过 Decap 后台编辑，推 `main` 自动构建上线。
 
-- 线上：https://imagrove.github.io/decap-cms-test/
-- 仓库：`github.com/imagrove/decap-cms-test`
+- 线上：https://imagrove.github.io/store.imagrove.com/
+- 仓库：`github.com/imagrove/store.imagrove.com`
 - 工作日志：[`LOG.md`](./LOG.md) ｜ 并入主站的方案：[`待办.md`](./待办.md)
 
 ## 当前状态
@@ -70,7 +70,7 @@ schema 是故意写严的：字段类型不合规会让构建失败，而不是�
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321/decap-cms-test/
+npm run dev      # http://localhost:4321/store.imagrove.com/
 ```
 
 要连后台一起跑（能真正写内容），开两个终端：
@@ -80,7 +80,7 @@ npm run dev      # Astro，默认 4321
 npm run cms      # decap-server，固定 8081
 ```
 
-后台地址：http://localhost:4321/decap-cms-test/admin/index.html
+后台地址：http://localhost:4321/store.imagrove.com/admin/index.html
 
 四个本地特有的坑：
 
@@ -91,7 +91,7 @@ npm run cms      # decap-server，固定 8081
 
 ## 上线链路
 
-1. 推到 `imagrove/decap-cms-test` 的 `main`
+1. 推到 `imagrove/store.imagrove.com` 的 `main`
 2. GitHub Actions 构建 `dist/` 并发布到 Pages
 3. 约 1 分钟后生效
 
@@ -115,7 +115,7 @@ npx wrangler@4 secret put GITHUB_CLIENT_SECRET
 - 颜色全部来自 `src/styles/tokens.css`，值取自《站点品牌色与主题Token规范》§2 的角色矩阵。**组件里不写品牌 hex**。
 - 主题三处声明齐全：`:root`（浅色）、`:root[data-theme='dark']`（手动切换，暂未做切换器）、`prefers-color-scheme`（系统偏好兜底）。漏第三处会出现"系统是暗色、页面仍是浅色"。
 - 字标用 `BrandWordmark.astro` 内联 SVG，取 `--brand-fg` 跟随主题反色，不涂蓝。源文件与其他站同源，sha 须一致。
-- 站内链接一律走 `src/lib/url.ts` 的 `base`，不要直接读 `import.meta.env.BASE_URL` —— 它末尾不带斜杠，`${base}products/` 会拼成 `/decap-cms-testproducts/`。
+- 站内链接一律走 `src/lib/url.ts` 的 `base`，不要直接读 `import.meta.env.BASE_URL` —— 它末尾不带斜杠，`${base}products/` 会拼成 `/store.imagrove.comproducts/`。
 
 ## 换成独立域名时
 
@@ -132,4 +132,4 @@ npx wrangler@4 secret put GITHUB_CLIENT_SECRET
 2. **换真图与真参数** —— 现在三个产品共用 `public/uploads/product-placeholder.svg`，参数是示例值。
 3. **部署 OAuth Worker** —— 见上文，需要一枚 Workers 权限的 Cloudflare token。
 4. **定去处** —— 并入主站 `/products/` 还是独立子域，三种方式的对比与执行步骤见 [`待办.md`](./待办.md)。
-5. **恢复动态板块** —— 路由与 posts collection 都还在，有真实文章时把导航和首页区块接回来。
+5. ~~恢复动态板块~~ —— 已移除：内容并入主站后本站不再承担内容运营，posts 集合与路由一并删除。

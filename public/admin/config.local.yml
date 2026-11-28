@@ -4,7 +4,7 @@ local_backend: true
 
 backend:
   name: github
-  repo: imagrove/decap-cms-test
+  repo: imagrove/store.imagrove.com
   branch: main
 
 media_folder: public/uploads

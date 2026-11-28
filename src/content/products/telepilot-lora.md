@@ -3,9 +3,9 @@ name: TelePilot 远传遥控终端
 model: TP-L1
 category: connectivity
 summary: 面向户外设备的 LoRa 远传遥控与遥测终端，内置本地逻辑，链路中断时仍按预设策略继续执行
-cover: /decap-cms-test/uploads/product-placeholder.svg
+cover: /store.imagrove.com/uploads/product-placeholder.svg
 gallery:
-  - /decap-cms-test/uploads/product-placeholder.svg
+  - /store.imagrove.com/uploads/product-placeholder.svg
 features:
   - title: 断链兜底
     detail: 与主机失联后按预设动作继续运行，不依赖云端在线

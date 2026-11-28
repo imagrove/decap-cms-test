@@ -1,21 +1,21 @@
 backend:
   name: github
-  repo: imagrove/decap-cms-test
+  repo: imagrove/store.imagrove.com
   branch: main
   # Cloudflare Worker OAuth 回调服务，部署后回填实际地址
   base_url: https://decap-oauth.__ACCOUNT__.workers.dev
   auth_endpoint: auth
 
-site_url: https://imagrove.github.io/decap-cms-test/
-display_url: https://imagrove.github.io/decap-cms-test/
-logo_url: https://imagrove.github.io/decap-cms-test/favicon.svg
+site_url: https://imagrove.github.io/store.imagrove.com/
+display_url: https://imagrove.github.io/store.imagrove.com/
+logo_url: https://imagrove.github.io/store.imagrove.com/favicon.svg
 
 # 写稿默认直接提交 main。需要草稿审阅流程时改成 editorial_workflow，
 # 那样每次保存会走分支 + Pull Request，适合多人协作但步骤变多。
 publish_mode: simple
 
 media_folder: public/uploads
-public_folder: /decap-cms-test/uploads
+public_folder: /store.imagrove.com/uploads
 
 collections:
   - name: posts

@@ -6,18 +6,6 @@ import { z } from 'astro/zod';
 // schema 加严后，Decap 写出的 frontmatter 不合规会直接让构建失败，这是刻意的：
 // 宁可挂 CI 也不要静默产出半成品页面。
 
-const posts = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
-  schema: z.object({
-    title: z.string(),
-    date: z.coerce.date(),
-    draft: z.boolean().default(false),
-    description: z.string().optional(),
-    tags: z.array(z.string()).default([]),
-    cover: z.string().optional(),
-  }),
-});
-
 // 产品目录：一个产品 = 一个 md 文件，图片与规格都随文件走，删文件即下架。
 const products = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/products' }),
@@ -41,4 +29,4 @@ const products = defineCollection({
   }),
 });
 
-export const collections = { posts, products };
+export const collections = { products };
